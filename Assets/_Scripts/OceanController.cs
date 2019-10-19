@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OceanController : MonoBehaviour
 {
-    public float verticalSpeed = 0.1f;
+    private Scene scene;
+    public float speed = 0.1f;
     public float resetPosition = 4.8f;
     public float resetPoint = -4.8f;
 
     // Start is called before the first frame update
     void Start()
     {
+        scene = SceneManager.GetActiveScene();
         //Reset();
     }
 
@@ -26,11 +29,24 @@ public class OceanController : MonoBehaviour
     /// </summary>
     void Move()
     {
-        Vector2 newPosition = new Vector2(0.0f, verticalSpeed);
-        Vector2 currentPosition = transform.position;
+        if (scene.name != "Level 2")
+        {
+            Vector2 newPosition = new Vector2(0.0f, speed);
+            Vector2 currentPosition = transform.position;
 
-        currentPosition -= newPosition;
-        transform.position = currentPosition;
+            currentPosition -= newPosition;
+            transform.position = currentPosition;
+        }
+        else
+        {
+            Vector2 newPosition = new Vector2(speed, 0.0f);
+            Vector2 currentPosition = transform.position;
+
+            currentPosition -= newPosition;
+            transform.position = currentPosition;
+        }
+
+
     }
 
     /// <summary>
@@ -38,7 +54,15 @@ public class OceanController : MonoBehaviour
     /// </summary>
     void Reset()
     {
-        transform.position = new Vector2(0.0f, resetPosition);
+        if (scene.name != "Level 2")
+        {
+            transform.position = new Vector2(0.0f, resetPosition);
+        }
+        else
+        {
+            transform.position = new Vector2(10.4f, 0.0f);
+        }
+
     }
 
     /// <summary>
@@ -47,9 +71,20 @@ public class OceanController : MonoBehaviour
     /// </summary>
     void CheckBounds()
     {
-        if(transform.position.y <= resetPoint)
+        if (scene.name != "Level 2")
         {
-            Reset();
+            if (transform.position.y <= resetPoint)
+            {
+                Reset();
+            }
         }
+        else
+        {
+            if(transform.position.x <= -14.4)
+            {
+                Reset();
+            }
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Util;
 
 public class PlayerController : MonoBehaviour
@@ -30,39 +31,75 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        Vector2 newPosition = transform.position;
-
-        if(Input.GetAxis("Horizontal") > 0.0f)
+        if (SceneManager.GetActiveScene().name != "Level 2")
         {
-            newPosition += new Vector2(speed.max, 0.0f);
+            Vector2 newPosition = transform.position;
+
+            if (Input.GetAxis("Horizontal") > 0.0f)
+            {
+                newPosition += new Vector2(speed.max, 0.0f);
+            }
+
+            if (Input.GetAxis("Horizontal") < 0.0f)
+            {
+                newPosition += new Vector2(speed.min, 0.0f);
+            }
+
+            transform.position = newPosition;
+        }
+        else
+        {
+            Vector2 newPosition = transform.position;
+
+            if (Input.GetAxis("Vertical") > 0.0f)
+            {
+                newPosition += new Vector2(0.0f, speed.max);
+            }
+            if (Input.GetAxis("Vertical") < 0.0f)
+            {
+                newPosition += new Vector2(0.0f, speed.min);
+            }
+
+            transform.position = newPosition;
         }
 
-        if (Input.GetAxis("Horizontal") < 0.0f)
-        {
-            newPosition += new Vector2(speed.min, 0.0f);
-        }
-
-        transform.position = newPosition;
     }
 
     public void CheckBounds()
     {
-        // check right boundary
-        if(transform.position.x > boundary.Right)
+        if (SceneManager.GetActiveScene().name != "Level 2")
         {
-            transform.position = new Vector2(boundary.Right, transform.position.y);
+            // check right boundary
+            if (transform.position.x > boundary.Right)
+            {
+                transform.position = new Vector2(boundary.Right, transform.position.y);
+            }
+
+            // check left boundary
+            if (transform.position.x < boundary.Left)
+            {
+                transform.position = new Vector2(boundary.Left, transform.position.y);
+            }
+        }
+        else
+        {
+            // check top boundary
+            if(transform.position.y > boundary.Top)
+            {
+                transform.position = new Vector2(transform.position.x, boundary.Top);
+            }
+            // check bottom boundary
+            if (transform.position.y < boundary.Bottom)
+            {
+                transform.position = new Vector2(transform.position.x, boundary.Bottom);
+            }
         }
 
-        // check left boundary
-        if (transform.position.x < boundary.Left)
-        {
-            transform.position = new Vector2(boundary.Left, transform.position.y);
-        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        switch(other.gameObject.tag)
+        switch (other.gameObject.tag)
         {
             case "Cloud":
                 _thunderSound.Play();

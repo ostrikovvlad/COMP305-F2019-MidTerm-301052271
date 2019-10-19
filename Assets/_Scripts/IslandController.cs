@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Util;
 
 public class IslandController : MonoBehaviour
@@ -28,11 +29,23 @@ public class IslandController : MonoBehaviour
     /// </summary>
     void Move()
     {
-        Vector2 newPosition = new Vector2(0.0f, verticalSpeed);
-        Vector2 currentPosition = transform.position;
+        if (SceneManager.GetActiveScene().name != "Level 2")
+        {
+            Vector2 newPosition = new Vector2(0.0f, verticalSpeed);
+            Vector2 currentPosition = transform.position;
 
-        currentPosition -= newPosition;
-        transform.position = currentPosition;
+            currentPosition -= newPosition;
+            transform.position = currentPosition;
+        }
+        else
+        {
+            Vector2 newPosition = new Vector2(verticalSpeed, 0.0f);
+            Vector2 currentPosition = transform.position;
+
+            currentPosition -= newPosition;
+            transform.position = currentPosition;
+        }
+
     }
 
     /// <summary>
@@ -40,8 +53,17 @@ public class IslandController : MonoBehaviour
     /// </summary>
     void Reset()
     {
-        float randomXPosition = Random.Range(boundary.Left, boundary.Right);
-        transform.position = new Vector2(randomXPosition, boundary.Top);
+        if (SceneManager.GetActiveScene().name != "Level 2")
+        {
+            float randomXPosition = Random.Range(boundary.Left, boundary.Right);
+            transform.position = new Vector2(randomXPosition, boundary.Top);
+        }
+        else
+        {
+            float randomYPosition = Random.Range(boundary.Top - 0.5f, boundary.Bottom + 0.5f);
+            transform.position = new Vector2(boundary.Right, randomYPosition);
+        }
+
     }
 
     /// <summary>
@@ -50,9 +72,20 @@ public class IslandController : MonoBehaviour
     /// </summary>
     void CheckBounds()
     {
-        if (transform.position.y <= boundary.Bottom)
+        if (SceneManager.GetActiveScene().name != "Level 2")
         {
-            Reset();
+            if (transform.position.y <= boundary.Bottom)
+            {
+                Reset();
+            }
         }
+        else
+        {
+            if (transform.position.x <= boundary.Left)
+            {
+                Reset();
+            }
+        }
+
     }
 }

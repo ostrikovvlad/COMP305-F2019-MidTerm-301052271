@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour
     public Text highScoreLabel;
 
     public GameObject highScore;
+    public GameObject livesScore;
 
     [Header("UI Control")]
     public GameObject startLabel;
@@ -46,7 +47,11 @@ public class GameController : MonoBehaviour
         set
         {
             _lives = value;
-            if(_lives < 1)
+            if(livesScore.GetComponent<LivesScore>().lives > _lives)
+            {
+                livesScore.GetComponent<LivesScore>().lives = _lives;
+            }
+            if(_lives < 1 && SceneManager.GetActiveScene().name != "End")
             {
                 
                 SceneManager.LoadScene("End");
@@ -76,6 +81,10 @@ public class GameController : MonoBehaviour
             {
                 highScore.GetComponent<HighScore>().score = _score;
             }
+            if(_score == 500 && SceneManager.GetActiveScene().name != "Level 2")
+            {
+                SceneManager.LoadScene("Level 2");
+            }
             scoreLabel.text = "Score: " + _score.ToString();
         }
     }
@@ -90,6 +99,7 @@ public class GameController : MonoBehaviour
     private void GameObjectInitialization()
     {
         highScore = GameObject.Find("HighScore");
+        livesScore = GameObject.Find("LivesScore");
 
         startLabel = GameObject.Find("StartLabel");
         endLabel = GameObject.Find("EndLabel");
@@ -118,6 +128,16 @@ public class GameController : MonoBehaviour
                 endLabel.SetActive(false);
                 restartButton.SetActive(false);
                 activeSoundClip = SoundClip.ENGINE;
+                livesScore.GetComponent<LivesScore>().lives = 5;
+                highScore.GetComponent<HighScore>().score = 0;
+                break;
+            case "Level 2":
+                highScoreLabel.enabled = false;
+                startLabel.SetActive(false);
+                startButton.SetActive(false);
+                endLabel.SetActive(false);
+                restartButton.SetActive(false);
+                activeSoundClip = SoundClip.ENGINE;
                 break;
             case "End":
                 scoreLabel.enabled = false;
@@ -129,8 +149,8 @@ public class GameController : MonoBehaviour
                 break;
         }
 
-        Lives = 5;
-        Score = 0;
+        Lives = livesScore.GetComponent<LivesScore>().lives;
+        Score = highScore.GetComponent<HighScore>().score;
 
 
         if ((activeSoundClip != SoundClip.NONE) && (activeSoundClip != SoundClip.NUM_OF_CLIPS))
@@ -165,6 +185,7 @@ public class GameController : MonoBehaviour
     public void OnStartButtonClick()
     {
         DontDestroyOnLoad(highScore);
+        DontDestroyOnLoad(livesScore);
         SceneManager.LoadScene("Main");
     }
 
