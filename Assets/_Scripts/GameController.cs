@@ -1,4 +1,13 @@
-﻿using System.Collections;
+﻿/* Filename: GameController.cs
+ * Author: Vladislav Ostrikov
+ * Student ID: 301052271
+ * Last moddified by: Vladislav Ostrikov
+ * Last modififed: Oct 19, 2019
+ * This script is used to manage the game overall(scene management, audio management, score management)
+ * Revision History: changed value of Lives and Score in the start method; added extra statements in the Score and Lives properties
+ *                   added livesScore to store lives; added 2 extra cases in the SceneConfiguration 
+ */
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,11 +56,13 @@ public class GameController : MonoBehaviour
         set
         {
             _lives = value;
+            // If Lives is less than livesScore than assign Lives to livesScore
             if(livesScore.GetComponent<LivesScore>().lives > _lives)
             {
                 livesScore.GetComponent<LivesScore>().lives = _lives;
             }
-            if(_lives < 1 && SceneManager.GetActiveScene().name != "End")
+            // If lives is less than 1 then load end scene
+            if (_lives < 1 && SceneManager.GetActiveScene().name != "End")
             {
                 
                 SceneManager.LoadScene("End");
@@ -76,16 +87,18 @@ public class GameController : MonoBehaviour
             _score = value;
 
             
-
+            // If highScore is less than Score than assign Score to highScore
             if (highScore.GetComponent<HighScore>().score < _score)
             {
                 highScore.GetComponent<HighScore>().score = _score;
             }
-            if(_score == 500 && SceneManager.GetActiveScene().name != "Level 2")
+            // If Score is equals to 500 and it is not the first level or the end scene, then load second level
+            if(_score == 500 && SceneManager.GetActiveScene().name != "Level 2" && SceneManager.GetActiveScene().name != "End")
             {
                 SceneManager.LoadScene("Level 2");
             }
-            if (_score == 1000 && SceneManager.GetActiveScene().name != "Level 3")
+            // If Score is equals to 1000 and it is not the third level or the end scene, then load third level
+            if (_score == 1000 && SceneManager.GetActiveScene().name != "Level 3" && SceneManager.GetActiveScene().name != "End")
             {
                 SceneManager.LoadScene("Level 3");
             }
@@ -132,8 +145,8 @@ public class GameController : MonoBehaviour
                 endLabel.SetActive(false);
                 restartButton.SetActive(false);
                 activeSoundClip = SoundClip.ENGINE;
-                livesScore.GetComponent<LivesScore>().lives = 5;
-                highScore.GetComponent<HighScore>().score = 0;
+                livesScore.GetComponent<LivesScore>().lives = 5; // assign the value of livesScore to 5
+                highScore.GetComponent<HighScore>().score = 0; // assign the value of highScore to 0
                 break;
             case "Level 2":
                 highScoreLabel.enabled = false;
@@ -161,8 +174,8 @@ public class GameController : MonoBehaviour
                 break;
         }
 
-        Lives = livesScore.GetComponent<LivesScore>().lives;
-        Score = highScore.GetComponent<HighScore>().score;
+        Lives = livesScore.GetComponent<LivesScore>().lives; // Assign Lives to livesScore
+        Score = highScore.GetComponent<HighScore>().score; // Assign Score to highScore
 
 
         if ((activeSoundClip != SoundClip.NONE) && (activeSoundClip != SoundClip.NUM_OF_CLIPS))
@@ -197,7 +210,7 @@ public class GameController : MonoBehaviour
     public void OnStartButtonClick()
     {
         DontDestroyOnLoad(highScore);
-        DontDestroyOnLoad(livesScore);
+        DontDestroyOnLoad(livesScore); // Keep the livesScore object in the scene
         SceneManager.LoadScene("Main");
     }
 

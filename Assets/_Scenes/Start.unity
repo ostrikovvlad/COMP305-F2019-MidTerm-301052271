@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f079fab7ca94643987c4b6fb86f197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lives: 5
 --- !u!4 &1308193942
 Transform:
   m_ObjectHideFlags: 0
@@ -389,6 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42104765ba11fb14eaf8dca5aee45332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
 --- !u!4 &2021264587
 Transform:
   m_ObjectHideFlags: 0
@@ -485,6 +487,11 @@ PrefabInstance:
       propertyPath: resetPoint
       value: -19.2
       objectReference: {fileID: 0}
+    - target: {fileID: 6529087978825976455, guid: f26fa4b4b9d63ea408d2e35103a3c379,
+        type: 3}
+      propertyPath: speed
+      value: 0.06
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f26fa4b4b9d63ea408d2e35103a3c379, type: 3}
 --- !u!1001 &6529087979578766152
@@ -568,6 +575,11 @@ PrefabInstance:
         type: 3}
       propertyPath: resetPosition
       value: 9.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6529087978825976455, guid: f26fa4b4b9d63ea408d2e35103a3c379,
+        type: 3}
+      propertyPath: speed
+      value: 0.06
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f26fa4b4b9d63ea408d2e35103a3c379, type: 3}

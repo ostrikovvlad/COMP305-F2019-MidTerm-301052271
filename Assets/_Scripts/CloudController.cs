@@ -112,14 +112,14 @@ public class CloudController : MonoBehaviour
         }
         else if(SceneManager.GetActiveScene().name == "Level 2")
         {
-            if (transform.position.x <= -3.7f)
+            if (transform.position.x <= -4.2f)
             {
                 Reset();
             }
         }
         else if(SceneManager.GetActiveScene().name == "Level 3")
         {
-            if(transform.position.x >= 3.7f)
+            if(transform.position.x >= 4.2f)
             {
                 Reset();
             }
