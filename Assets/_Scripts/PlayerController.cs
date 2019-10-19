@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/* Filename: PlayerController.cs
+ * Author: Vladislav Ostrikov
+ * Student ID: 301052271
+ * Last moddified by: Vladislav Ostrikov
+ * Last modififed: Oct 19, 2019
+ * This script is used to manage the player controller(scene management, audio management, score management)
+ * Revision History: added extra statements in the Move, Reset and CheckBoundary methods
+ */
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
