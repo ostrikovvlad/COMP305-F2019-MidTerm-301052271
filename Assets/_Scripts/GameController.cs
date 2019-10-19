@@ -85,6 +85,10 @@ public class GameController : MonoBehaviour
             {
                 SceneManager.LoadScene("Level 2");
             }
+            if (_score == 1000 && SceneManager.GetActiveScene().name != "Level 3")
+            {
+                SceneManager.LoadScene("Level 3");
+            }
             scoreLabel.text = "Score: " + _score.ToString();
         }
     }
@@ -132,6 +136,14 @@ public class GameController : MonoBehaviour
                 highScore.GetComponent<HighScore>().score = 0;
                 break;
             case "Level 2":
+                highScoreLabel.enabled = false;
+                startLabel.SetActive(false);
+                startButton.SetActive(false);
+                endLabel.SetActive(false);
+                restartButton.SetActive(false);
+                activeSoundClip = SoundClip.ENGINE;
+                break;
+            case "Level 3":
                 highScoreLabel.enabled = false;
                 startLabel.SetActive(false);
                 startButton.SetActive(false);

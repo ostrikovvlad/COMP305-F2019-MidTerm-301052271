@@ -29,7 +29,7 @@ public class IslandController : MonoBehaviour
     /// </summary>
     void Move()
     {
-        if (SceneManager.GetActiveScene().name != "Level 2")
+        if (SceneManager.GetActiveScene().name != "Level 2" && SceneManager.GetActiveScene().name != "Level 3")
         {
             Vector2 newPosition = new Vector2(0.0f, verticalSpeed);
             Vector2 currentPosition = transform.position;
@@ -37,12 +37,20 @@ public class IslandController : MonoBehaviour
             currentPosition -= newPosition;
             transform.position = currentPosition;
         }
-        else
+        else if(SceneManager.GetActiveScene().name == "Level 2")
         {
             Vector2 newPosition = new Vector2(verticalSpeed, 0.0f);
             Vector2 currentPosition = transform.position;
 
             currentPosition -= newPosition;
+            transform.position = currentPosition;
+        }
+        else if(SceneManager.GetActiveScene().name == "Level 3")
+        {
+            Vector2 newPosition = new Vector2(verticalSpeed, 0.0f);
+            Vector2 currentPosition = transform.position;
+
+            currentPosition += newPosition;
             transform.position = currentPosition;
         }
 
@@ -53,15 +61,20 @@ public class IslandController : MonoBehaviour
     /// </summary>
     void Reset()
     {
-        if (SceneManager.GetActiveScene().name != "Level 2")
+        if (SceneManager.GetActiveScene().name != "Level 2" && SceneManager.GetActiveScene().name != "Level 3")
         {
             float randomXPosition = Random.Range(boundary.Left, boundary.Right);
             transform.position = new Vector2(randomXPosition, boundary.Top);
         }
-        else
+        else if(SceneManager.GetActiveScene().name == "Level 2")
         {
             float randomYPosition = Random.Range(boundary.Top - 0.5f, boundary.Bottom + 0.5f);
             transform.position = new Vector2(boundary.Right, randomYPosition);
+        }
+        else if(SceneManager.GetActiveScene().name == "Level 3")
+        {
+            float randomYPosition = Random.Range(boundary.Top - 0.5f, boundary.Bottom + 0.5f);
+            transform.position = new Vector2(boundary.Left, randomYPosition);
         }
 
     }
@@ -72,16 +85,23 @@ public class IslandController : MonoBehaviour
     /// </summary>
     void CheckBounds()
     {
-        if (SceneManager.GetActiveScene().name != "Level 2")
+        if (SceneManager.GetActiveScene().name != "Level 2" && SceneManager.GetActiveScene().name != "Level 3")
         {
             if (transform.position.y <= boundary.Bottom)
             {
                 Reset();
             }
         }
-        else
+        else if(SceneManager.GetActiveScene().name == "Level 2")
         {
-            if (transform.position.x <= boundary.Left)
+            if (transform.position.x <= boundary.Left - 0.7f)
+            {
+                Reset();
+            }
+        }
+        else if(SceneManager.GetActiveScene().name == "Level 3")
+        {
+            if(transform.position.x >= boundary.Right + 0.7f)
             {
                 Reset();
             }

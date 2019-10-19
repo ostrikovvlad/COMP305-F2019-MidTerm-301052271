@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        if (SceneManager.GetActiveScene().name != "Level 2")
+        if (SceneManager.GetActiveScene().name != "Level 2" && SceneManager.GetActiveScene().name != "Level 3")
         {
             Vector2 newPosition = transform.position;
 
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     public void CheckBounds()
     {
-        if (SceneManager.GetActiveScene().name != "Level 2")
+        if (SceneManager.GetActiveScene().name != "Level 2" && SceneManager.GetActiveScene().name != "Level 3")
         {
             // check right boundary
             if (transform.position.x > boundary.Right)

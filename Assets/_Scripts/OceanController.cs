@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class OceanController : MonoBehaviour
 {
-    private Scene scene;
     public float speed = 0.1f;
     public float resetPosition = 4.8f;
     public float resetPoint = -4.8f;
@@ -13,7 +12,6 @@ public class OceanController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scene = SceneManager.GetActiveScene();
         //Reset();
     }
 
@@ -29,7 +27,7 @@ public class OceanController : MonoBehaviour
     /// </summary>
     void Move()
     {
-        if (scene.name != "Level 2")
+        if (SceneManager.GetActiveScene().name != "Level 2" && SceneManager.GetActiveScene().name != "Level 3")
         {
             Vector2 newPosition = new Vector2(0.0f, speed);
             Vector2 currentPosition = transform.position;
@@ -37,7 +35,7 @@ public class OceanController : MonoBehaviour
             currentPosition -= newPosition;
             transform.position = currentPosition;
         }
-        else
+        else if(SceneManager.GetActiveScene().name == "Level 2")
         {
             Vector2 newPosition = new Vector2(speed, 0.0f);
             Vector2 currentPosition = transform.position;
@@ -45,8 +43,14 @@ public class OceanController : MonoBehaviour
             currentPosition -= newPosition;
             transform.position = currentPosition;
         }
+        else if(SceneManager.GetActiveScene().name == "Level 3")
+        {
+            Vector2 newPosition = new Vector2(speed, 0.0f);
+            Vector2 currentPosition = transform.position;
 
-
+            currentPosition += newPosition;
+            transform.position = currentPosition;
+        }
     }
 
     /// <summary>
@@ -54,13 +58,17 @@ public class OceanController : MonoBehaviour
     /// </summary>
     void Reset()
     {
-        if (scene.name != "Level 2")
+        if (SceneManager.GetActiveScene().name != "Level 2" && SceneManager.GetActiveScene().name != "Level 3")
         {
             transform.position = new Vector2(0.0f, resetPosition);
         }
-        else
+        else if(SceneManager.GetActiveScene().name == "Level 2")
         {
             transform.position = new Vector2(10.4f, 0.0f);
+        }
+        else if(SceneManager.GetActiveScene().name == "Level 3")
+        {
+            transform.position = new Vector2(-10.4f, 0.0f);
         }
 
     }
@@ -71,16 +79,23 @@ public class OceanController : MonoBehaviour
     /// </summary>
     void CheckBounds()
     {
-        if (scene.name != "Level 2")
+        if (SceneManager.GetActiveScene().name != "Level 2" && SceneManager.GetActiveScene().name != "Level 3")
         {
             if (transform.position.y <= resetPoint)
             {
                 Reset();
             }
         }
-        else
+        else if(SceneManager.GetActiveScene().name == "Level 2")
         {
             if(transform.position.x <= -14.4)
+            {
+                Reset();
+            }
+        }
+        else if(SceneManager.GetActiveScene().name == "Level 3")
+        {
+            if(transform.position.x >= 14.4)
             {
                 Reset();
             }
